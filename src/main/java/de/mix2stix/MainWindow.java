@@ -668,7 +668,7 @@ public class MainWindow extends JFrame {
         public boolean inputIsCorrect(){
             if (
                isValidPathInput(txtSrcDir.getText(), txtDestDir.getText())
-               && isValidLong(txtMaxSize.getText())
+               && isValidLong((String)language.get("labelmaxmb"), txtMaxSize.getText())
                && isDifferentPath(txtSrcDir.getText(), txtDestDir.getText())
                && isValidFilters(txtFilter.getText())
                     && isRandomPrefix(chkRandomPrefix.isSelected(), txtRandomPrefixCount.getText())
@@ -763,10 +763,10 @@ public class MainWindow extends JFrame {
 
 
         // �bergebenen long-Wert auf Korrektheit pr�fen
-        public boolean isValidLong(String value) {
+        public boolean isValidLong(String label, String value) {
             // leerer String
             if (value.equals("")) {
-                showErrorDialog((String)language.get("labelmaxmb") + ": " + (String)language.get("errornovaluegiven"));
+                showErrorDialog(label + ": " + (String)language.get("errornovaluegiven"));
                 return false;
             }
            try {
@@ -774,7 +774,7 @@ public class MainWindow extends JFrame {
                 return true;
             }
             catch (NumberFormatException nfEx){
-                showErrorDialog((String)language.get("labelmaxmb") + ": " + (String)language.get("errorinvalidinteger") + " (" + value + ")");
+                showErrorDialog(label + ": " + (String)language.get("errorinvalidinteger") + " (" + value + ")");
                 return false;
             }
 
@@ -798,7 +798,7 @@ public class MainWindow extends JFrame {
 
         public boolean isRandomPrefix(boolean checkBoxEnabled, String randomPrefixCount) {
             if (checkBoxEnabled) {
-                return isValidLong(randomPrefixCount);
+                return isValidLong((String)language.get("labelrandomprefix"), randomPrefixCount);
             }
             return true;
         }
