@@ -30,15 +30,15 @@ public class FunctionClass {
     private File logfile;
     private Properties language;
     public void setLanguage(Properties language) {
-    	this.language = language;
+        this.language = language;
     }
 
     // Konstruktor
     public FunctionClass(MainWindow calledFrom){
-        this.myMainWindow 	= calledFrom;
-        this.configfile 	= calledFrom.getConfigfile();
-        this.logfile 		= calledFrom.getLogfile();
-        this.language		= calledFrom.getLanguage();
+        this.myMainWindow   = calledFrom;
+        this.configfile     = calledFrom.getConfigfile();
+        this.logfile        = calledFrom.getLogfile();
+        this.language       = calledFrom.getLanguage();
         this.initLogFile();
     }
 
@@ -49,17 +49,17 @@ public class FunctionClass {
     
     // Konfigdatei auslesen
     public File[] readConfigfile() {
-    	File[] config = new File[2];
+        File[] config = new File[2];
         try {
-        	FileInputStream file = new FileInputStream(this.configfile);
+            FileInputStream file = new FileInputStream(this.configfile);
             ObjectInputStream o = new ObjectInputStream(file);
             config = (File[])o.readObject();
             o.close();
         }
         catch (Exception ex) {
-        	//this.myMainWindow.showErrorDialog((String)language.get("fileconfigcantread") + " (" + this.configfile + ")");
-        	config = null;
-        }    	
+            //this.myMainWindow.showErrorDialog((String)language.get("fileconfigcantread") + " (" + this.configfile + ")");
+            config = null;
+        }       
         return config;
     }
     
@@ -78,44 +78,44 @@ public class FunctionClass {
     
     // Aktuelles Settingsfile aus  Konfigdatei laden
     public File getLatestSettingsFileFromConf(){
-    	File[] config = readConfigfile();
-    	if (config == null)
-    		return null;
-    	else
-    		return config[0];
+        File[] config = readConfigfile();
+        if (config == null)
+            return null;
+        else
+            return config[0];
     }
     
     // Aktuelles Settingsfile in Konfigdatei speichern
     public void saveLatestSettingsFileToConf(File settingsfile){
-    	File[] config = readConfigfile();
-    	if (config == null) {
-    		config = new File[]{settingsfile, null};
-    	}
-    	else {
-    		config[0] = settingsfile;
-    	}
-    	writeConfigfile(config);	
+        File[] config = readConfigfile();
+        if (config == null) {
+            config = new File[]{settingsfile, null};
+        }
+        else {
+            config[0] = settingsfile;
+        }
+        writeConfigfile(config);    
     }
 
     // Aktuelles Sprachfile aus  Konfigdatei laden
     public File getLatestTranslationFileFromConf(){
-    	File[] config = readConfigfile();
-    	if (config == null)
-    		return null;
-    	else
-    		return config[1];
+        File[] config = readConfigfile();
+        if (config == null)
+            return null;
+        else
+            return config[1];
     }
     
     // Aktuelles Sprachfile in Konfigdatei speichern
     public void saveLatestTranslationFileToConf(File translationfile){
-    	File[] config = readConfigfile();
-    	if (config == null) {
-    		config = new File[]{null,translationfile};
-    	}
-    	else {
-    		config[1] = translationfile;
-    	}
-    	writeConfigfile(config);	
+        File[] config = readConfigfile();
+        if (config == null) {
+            config = new File[]{null,translationfile};
+        }
+        else {
+            config[1] = translationfile;
+        }
+        writeConfigfile(config);    
     }
 
     // Eintr�ge aus Settingsfile laden

@@ -16,7 +16,7 @@ extends WindowAdapter
    */
   public WindowClosingAdapter(boolean exitSystem)
   {
-	  this.exitSystem = exitSystem;
+      this.exitSystem = exitSystem;
   }
 
   /**
@@ -30,10 +30,10 @@ extends WindowAdapter
 
   public void windowClosing(WindowEvent event)
   {
-	  event.getWindow().setVisible(false);
-	  event.getWindow().dispose();
-	  if (exitSystem) {
-		  System.exit(0);
-	  }
+      event.getWindow().setVisible(false);
+      event.getWindow().dispose();
+      if (exitSystem) {
+          System.exit(0);
+      }
   }
 }

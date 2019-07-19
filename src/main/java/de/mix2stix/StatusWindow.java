@@ -47,9 +47,9 @@ public class StatusWindow extends JFrame implements ActionListener {
     private Font            fontNormal;
     private Font            fontBold;
     // Spracheinstellungen
-    private Properties 		language;
+    private Properties      language;
     public void setLanguage(Properties language) {
-    	this.language = language;
+        this.language = language;
     }
 
 
@@ -58,7 +58,7 @@ public class StatusWindow extends JFrame implements ActionListener {
     public StatusWindow(MainWindow myMainWindow){
         super(myMainWindow.getTitle());
         try {
-        	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
         catch (Exception e){
         }
@@ -129,8 +129,8 @@ public class StatusWindow extends JFrame implements ActionListener {
     }
 
     // zuf�llig Dateien kopieren, bis Limit erreicht wird
-	public void startCopying(String sourcePath, String destPath, String maxSize, String filterarea, boolean clearDest,
-			boolean force, String randomPrefixCount) {
+    public void startCopying(String sourcePath, String destPath, String maxSize, String filterarea, boolean clearDest,
+            boolean force, String randomPrefixCount) {
         // Logfile initialisieren
         this.myFunctionClass.initLogFile();
         // Hauptprogrammfenster deaktivieren
@@ -140,8 +140,8 @@ public class StatusWindow extends JFrame implements ActionListener {
         resetValuesOfGuiElements();
         
         // CopyThread initialisieren und starten
-		tCopy = new CopyThread(myMainWindow, this, myFunctionClass, sourcePath, destPath, maxSize, filterarea,
-				clearDest, force, Integer.valueOf(randomPrefixCount), this.language);
+        tCopy = new CopyThread(myMainWindow, this, myFunctionClass, sourcePath, destPath, maxSize, filterarea,
+                clearDest, force, Integer.valueOf(randomPrefixCount), this.language);
         tCopy.start();
     }
 
@@ -152,7 +152,7 @@ public class StatusWindow extends JFrame implements ActionListener {
 
     // Usereingabe verarbeiten
     @Override
-	public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e){
         Object src = new Object();
         src = e.getSource();
         // Button "Abbrechen"

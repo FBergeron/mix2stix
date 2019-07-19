@@ -22,13 +22,13 @@ public class ProgramInfoViewer extends JFrame implements WindowListener {
     private MainWindow myMainWindow;
     private Properties language;
     public void setLanguage(Properties language) {
-    	this.language = language;
+        this.language = language;
     }
     
     public ProgramInfoViewer(MainWindow calledFrom) {
         super();
-        this.myMainWindow 	= calledFrom;
-        this.language 		= calledFrom.getLanguage();
+        this.myMainWindow   = calledFrom;
+        this.language       = calledFrom.getLanguage();
     }
     
     public class MyPanel extends JPanel implements ActionListener {

@@ -31,8 +31,8 @@ import javax.swing.JTextArea;
 
 
 public class LogViewer extends JFrame implements WindowListener {
-	
-	private Properties language;
+    
+    private Properties language;
     
     public LogViewer(File logfile, Properties language) {
         super();
@@ -71,7 +71,7 @@ public class LogViewer extends JFrame implements WindowListener {
         } catch(FileNotFoundException fnfe) {
             log = (String)language.get("error") + ": "+ (String)language.get("filelogdoesntexist") + " (" + logfile + ")";
         } catch(IOException ioe) {
-        	log = (String)language.get("error") + ": "+ (String)language.get("filelogcantread") + " (" + logfile + ")";
+            log = (String)language.get("error") + ": "+ (String)language.get("filelogcantread") + " (" + logfile + ")";
         }
         return log;
     }
