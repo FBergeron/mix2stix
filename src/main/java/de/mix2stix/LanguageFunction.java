@@ -56,6 +56,7 @@ public class LanguageFunction {
         p.put("checkboxcleardestination","Clear destination dir");
         p.put("checkboxforceoverwrite","Replace existing files");
         p.put("checkboxrandomprefix", "Add random prefix");
+        p.put("checkboxkeephierarchy", "Keep folder hierarchy");
         p.put("labeldestinationdir","Destination");
         p.put("labelfilter","File filter");
         p.put("labelmaxmb","MB to copy");

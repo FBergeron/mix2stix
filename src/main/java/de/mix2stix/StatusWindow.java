@@ -130,7 +130,7 @@ public class StatusWindow extends JFrame implements ActionListener {
 
     // zuf�llig Dateien kopieren, bis Limit erreicht wird
     public void startCopying(String sourcePath, String destPath, String maxSize, String filterarea, boolean clearDest,
-            boolean force, String randomPrefixCount) {
+            boolean force, String randomPrefixCount, boolean keepHierarchy) {
         // Logfile initialisieren
         this.myFunctionClass.initLogFile();
         // Hauptprogrammfenster deaktivieren
@@ -141,7 +141,7 @@ public class StatusWindow extends JFrame implements ActionListener {
         
         // CopyThread initialisieren und starten
         tCopy = new CopyThread(myMainWindow, this, myFunctionClass, sourcePath, destPath, maxSize, filterarea,
-                clearDest, force, Integer.valueOf(randomPrefixCount), this.language);
+                clearDest, force, Integer.valueOf(randomPrefixCount), keepHierarchy, this.language);
         tCopy.start();
     }
 

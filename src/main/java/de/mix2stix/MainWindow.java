@@ -345,24 +345,25 @@ public class MainWindow extends JFrame {
     public class MainPanel extends JPanel implements ActionListener {
 
         // GUI-Elemente deklarieren
-        JLabel         lblSrcDir;
-        JTextField     txtSrcDir;
-        JButton        btnSrcDir;
-        JLabel         lblDestDir;
-        JTextField     txtDestDir;
-        JButton        btnDestDir;
-        JLabel         lblMaxSize;
-        JTextField     txtMaxSize;
-        JLabel         lblFilter;
-        JScrollPane    scpFilter;
-        JTextField     txtFilter;
-        JLabel         lblForce;
-        JCheckBox      chkClearDest;
-        JCheckBox      chkForce;
-        JLabel lblRandomPrefix;
-        JTextField txtRandomPrefixCount;
-        JCheckBox chkRandomPrefix;
-        JButton        btnCopy;
+        JLabel          lblSrcDir;
+        JTextField      txtSrcDir;
+        JButton         btnSrcDir;
+        JLabel          lblDestDir;
+        JTextField      txtDestDir;
+        JButton         btnDestDir;
+        JLabel          lblMaxSize;
+        JTextField      txtMaxSize;
+        JLabel          lblFilter;
+        JScrollPane     scpFilter;
+        JTextField      txtFilter;
+        JLabel          lblForce;
+        JCheckBox       chkClearDest;
+        JCheckBox       chkForce;
+        JLabel          lblRandomPrefix;
+        JTextField      txtRandomPrefixCount;
+        JCheckBox       chkRandomPrefix;
+        JCheckBox       chkKeepHierarchy;
+        JButton         btnCopy;
 
         // Konstruktor f�r Content-Panel
         public MainPanel(){
@@ -440,9 +441,15 @@ public class MainWindow extends JFrame {
             chkRandomPrefix.addActionListener(this);
             add(chkRandomPrefix);
 
+            chkKeepHierarchy = new JCheckBox("");
+            chkKeepHierarchy.setFont(fontBold);
+            chkKeepHierarchy.setBounds(220, 160, 200, 25);
+            chkKeepHierarchy.addActionListener(this);
+            add(chkKeepHierarchy);
+
             btnCopy = new JButton("");
             btnCopy.setFont(fontBold);
-            btnCopy.setBounds(10, 170, 400, 30);
+            btnCopy.setBounds(10, 200, 400, 30);
             btnCopy.setToolTipText("");
             btnCopy.addActionListener(this);
             add(btnCopy);
@@ -453,7 +460,7 @@ public class MainWindow extends JFrame {
             // GUI mit Sprache f�llen
             fillGui();
 
-            this.setSize(420, 180);
+            this.setSize(420, 240);
             this.setVisible(true);
         }
         
@@ -477,6 +484,7 @@ public class MainWindow extends JFrame {
             this.btnLog.setToolTipText((String)language.get("buttonlogtooltip"));*/
             this.lblRandomPrefix.setText((String) language.get("labelrandomprefix") + ": ");
             this.chkRandomPrefix.setText((String) language.get("checkboxrandomprefix"));
+            this.chkKeepHierarchy.setText((String) language.get("checkboxkeephierarchy"));
             this.btnCopy.setText((String)language.get("buttoncopy"));
             this.btnCopy.setToolTipText((String)language.get("buttoncopytooltip"));
             this.repaint();
@@ -649,15 +657,16 @@ public class MainWindow extends JFrame {
         public void startCopying(){
             if (!inputIsCorrect()) {
                 return;
-              }
+            }
             myStatusWindow.startCopying(
-                                       txtSrcDir.getText(),
-                                       txtDestDir.getText(),
-                                       txtMaxSize.getText(),
-                                       txtFilter.getText(),
-                                       chkClearDest.isSelected(),
-                    chkForce.isSelected(), chkRandomPrefix.isSelected() ? txtRandomPrefixCount.getText() : "0"
-                                       );
+                txtSrcDir.getText(),
+                txtDestDir.getText(),
+                txtMaxSize.getText(),
+                txtFilter.getText(),
+                chkClearDest.isSelected(),
+                chkForce.isSelected(), 
+                chkRandomPrefix.isSelected() ? txtRandomPrefixCount.getText() : "0",
+                chkKeepHierarchy.isSelected());
         }
 
         // ------------------------------------------------------------------------------

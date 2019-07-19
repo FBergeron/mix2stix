@@ -38,6 +38,7 @@ public class CopyThread extends Thread {
     private boolean             clearDest;
     private boolean             force;
     private int randomPrefixCount;
+    private boolean             keepHierarchy;
     private Properties          language;
     private MainWindow          myMainWindow;
     private FunctionClass       myFunctionClass;
@@ -53,7 +54,7 @@ public class CopyThread extends Thread {
     
     public CopyThread(MainWindow calledFrom, StatusWindow mix2stixfunction, FunctionClass filefunction,
             String sourcePath, String destPath, String maxSize, String filterarea, boolean clearDest, boolean force,
-            int randomPrefixCount, Properties language) {
+            int randomPrefixCount, boolean keepHierarchy, Properties language) {
         this.sourcePath = sourcePath;
         this.destPath = destPath;
         this.maxSize = maxSize;
@@ -61,6 +62,7 @@ public class CopyThread extends Thread {
         this.clearDest = clearDest;
         this.force = force;
         this.randomPrefixCount = randomPrefixCount;
+        this.keepHierarchy = keepHierarchy;
         this.myMainWindow = calledFrom;
         this.myFunctionClass = filefunction;
         this.myStatusWindow = mix2stixfunction;
@@ -143,7 +145,7 @@ public class CopyThread extends Thread {
             // Byte-Grenze füllen
             List<File> randomFiles = fillRandomList(allSrcFiles, this.maxSize);
             // Kopier-Thread mit dem zuf�llig bef�llten Vektor starten
-            copyRandomFiles(randomFiles, allDestFiles, force);
+            copyRandomFiles(randomFiles, allDestFiles, force, keepHierarchy);
         }
     }
     
@@ -298,7 +300,7 @@ public class CopyThread extends Thread {
     }
     
     // alle Dateien der übergebenen Liste ins Zielverzeichnis kopieren
-    private void copyRandomFiles(List<File> randomFiles, List<File> destDirs, boolean force) {
+    private void copyRandomFiles(List<File> randomFiles, List<File> destDirs, boolean force, boolean keepHierarchy) {
         myStatusWindow.lblPercent.setText("0%");
         Random random = new Random();
         // alle Dateien des Vektors kopieren
@@ -316,11 +318,16 @@ public class CopyThread extends Thread {
             myFunctionClass.addLogHeadLine((String) language.get("loglinecopyto") + " " + nextDestDir.getPath());
 
             String targetFileName = sourceFile.getName();
+            String filePath = null;
+            if (keepHierarchy)
+                filePath = sourceFile.toString().substring(this.sourcePath.length() + 1, sourceFile.toString().indexOf(targetFileName));
             if (randomPrefixCount> 0){
                 targetFileName = String.format("%0" + randomPrefixCount + "d",
                         random.nextInt((int) Math.floor(Math.pow(10, randomPrefixCount))))
                         + " - " + targetFileName;
             }
+            if (keepHierarchy)
+                targetFileName = filePath + targetFileName;
 
             File destFile = new File(nextDestDir, targetFileName);
 
@@ -421,6 +428,9 @@ public class CopyThread extends Thread {
                 throw new IOException(dest.getPath() + " (" + (String)language.get("errorfileexists") + ")");
             }
         }
+    
+        createParentHierarchyRec(dest.getParentFile());
+
         // Quelldatei einlesen und als Zieldatei schreiben
         byte[] buffer = new byte[bufSize];
         int read = 0;
@@ -473,7 +483,14 @@ public class CopyThread extends Thread {
         }
         return true;
     }
-    
+   
+    private void createParentHierarchyRec(File parent) {
+        if (parent.exists())
+            return;
+        createParentHierarchyRec(parent.getParentFile());
+        parent.mkdir();
+    }
+
     // Datei/Verzeichnis l�schen
     private void deleteFileOrDir(File deleteMe) {
         if (!deleteMe.delete()) {
